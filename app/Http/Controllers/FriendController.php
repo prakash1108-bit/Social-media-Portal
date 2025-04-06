@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\FriendRequest;
 use App\Models\User;
+use App\Notifications\FriendRequestReceived;
 use Illuminate\Http\Request;
 
 class FriendController extends Controller
@@ -71,6 +72,9 @@ class FriendController extends Controller
             'receiver_id' => $receiver->id,
             'status' => 'pending',
         ]);
+
+        $receiver->notify(new FriendRequestReceived($sender));
+       
         return back()->with('success', 'Friend request sent!');
     }
 

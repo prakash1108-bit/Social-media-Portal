@@ -28,16 +28,24 @@
                     {{ session('error') }}
                 </div>
             @endif
-            
+
             <!-- Search Results -->
             @if (isset($users) && $users->count())
                 @if (request('query'))
                     <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg divide-y">
                         @foreach ($users as $user)
                             <div class="p-4 flex justify-between items-center">
-                                <div>
-                                    <p class="text-lg font-medium text-gray-900 dark:text-white">{{ $user->name }}</p>
-                                    <p class="text-sm text-gray-500 dark:text-gray-400">{{ $user->email }}</p>
+                                <div class="flex gap-4">
+                                    <img src="{{ asset('storage/' . $user->image) }}"
+                                        class="w-16 h-16 rounded-full object-cover border border-gray-300 shadow-sm">
+                                    <div class="mt-2">
+                                        <p class="text-lg font-medium text-gray-900 dark:text-white">
+                                            {{ $user->name }}
+                                        </p>
+                                        <p class="text-sm text-gray-500 dark:text-gray-400">
+                                            {{ $user->email }}
+                                        </p>
+                                    </div>
                                 </div>
                                 <form action="{{ route('friend.request.send', $user->id) }}" method="POST">
                                     @csrf

@@ -12,13 +12,17 @@
                     @foreach ($friends as $friend)
                         @if ($friend->receiver->id != auth()->user()->id)
                             <div class="p-4 flex justify-between items-center">
-                                <div>
-                                    <p class="text-lg font-medium text-gray-900 dark:text-white">
-                                        {{ $friend->receiver->name }}
-                                    </p>
-                                    <p class="text-sm text-gray-500 dark:text-gray-400">
-                                        {{ $friend->receiver->email }}
-                                    </p>
+                                <div class="flex gap-4">
+                                    <img src="{{ asset('storage/' . $friend->receiver->image) }}"
+                                        class="w-16 h-16 rounded-full object-cover border border-gray-300 shadow-sm">
+                                    <div class="mt-2">
+                                        <p class="text-lg font-medium text-gray-900 dark:text-white">
+                                            {{ $friend->sender->name }}
+                                        </p>
+                                        <p class="text-sm text-gray-500 dark:text-gray-400">
+                                            {{ $friend->sender->email }}
+                                        </p>
+                                    </div>
                                 </div>
                                 <form method="POST" action="{{ route('friends.remove', $friend->receiver->id) }}">
                                     @csrf
@@ -28,13 +32,17 @@
                             </div>
                         @else
                             <div class="p-4 flex justify-between items-center">
-                                <div>
-                                    <p class="text-lg font-medium text-gray-900 dark:text-white">
-                                        {{ $friend->sender->name }}
-                                    </p>
-                                    <p class="text-sm text-gray-500 dark:text-gray-400">
-                                        {{ $friend->sender->email }}
-                                    </p>
+                                <div class="flex gap-4">
+                                    <img src="{{ asset('storage/' . $friend->sender->image) }}"
+                                        class="w-16 h-16 rounded-full object-cover border border-gray-300 shadow-sm">
+                                    <div class="mt-2">
+                                        <p class="text-lg font-medium text-gray-900 dark:text-white">
+                                            {{ $friend->sender->name }}
+                                        </p>
+                                        <p class="text-sm text-gray-500 dark:text-gray-400">
+                                            {{ $friend->sender->email }}
+                                        </p>
+                                    </div>
                                 </div>
                                 <form method="POST" action="{{ route('friends.remove', $friend->sender->id) }}">
                                     @csrf

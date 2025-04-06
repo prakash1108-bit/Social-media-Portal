@@ -30,9 +30,12 @@ class ProfileController extends Controller
 
         if ($request->hasFile('image')) {
             $profilePicture = $request->file('image');
-            $filename = time() . '_' . $profilePicture->getClientOriginalName();
+            $timestamp = time(); 
+            $extension = $profilePicture->getClientOriginalExtension();
+            $filename = $timestamp . '.' . $extension;
             $path = $profilePicture->storeAs('images', $filename, 'public');
             $data['image'] = $path;
+            $request->user()->update($data);
         }
 
         if ($request->user()->isDirty('email')) {
